@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block login %}
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Sign In</h5>
+                    <form class="form-signin" method="post">
+                        {% csrf_token %}
+                        <div class="form-label-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" id="loginUsername" class="form-control text-left" placeholder="Username"
+                                   name="username" required
+                                   value="{% if form.username.value %}{{ form.username.value }}{% endif %}" autofocus>
+                        </div>
+                        <div class="form-label-group pt-3">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" placeholder="Password"
+                                   name="password" required>
+                            {% if form.errors %}
+                                <small class="text-danger pt-3">
+                                    {#{{ form.non_field_errors }}#}
+                                    Username and Password did not matched
+                                </small>
+                            {% endif %}
+                        </div>
+                        <div class="form-group pt-3">
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase form-control" type="submit">
+                                Sign in
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock login %}

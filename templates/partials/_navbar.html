@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <a class="navbar-brand" href="{% url 'users' %}"><span class="text-primary">My User Management</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="nav ml-auto">
+            <form action="{% url 'search-users' %}">
+                <input type="text" class="form-control" id="search" aria-describedby="search"
+                       placeholder="Search username..." name="user" value="{{ values.user }}">
+            </form>
+            {% if user.is_authenticated %}
+                <span class="text-secondary nav-item nav-link"> Welcome {{ user.username }} !</span>
+                {% if user.groups.name == 'admin' %}
+                    <li {% if 'add' in request.path %} class="nav-item active "{% else %} class="nav-item" {% endif %}>
+                        <a class="nav-link" href="{% url 'add-user' %}"> Add New </a>
+                    </li>
+                {% endif %}
+                <li {% if '/' ==  request.path%} class="nav-item active" {% else %}class="nav-item" {% endif %}>
+                    <a class="nav-link" href="{% url 'users' %}">View All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"> Logout </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}"> Login </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <table id="user_search_list" class="table table-striped">
+        <thead>
+        <tr>
+            <th> Name</th>
+            <th> Username</th>
+            <th> Email</th>
+            <th class="text-center"> Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if users_result %}
+            {% for user in users_result %}
+                <tr>
+                    <td>{% if not user.first_name and not user.last_name %}
+                        --------
+                    {% else %}
+                        {{ user.first_name }}
+                        {{ user.last_name }}
+                    {% endif %}</td>
+                    <td>{{ user.username }}
+                    </td>
+                    <td>{{ user.email }}</td>
+                    {% if user.username != request.user.username %}
+                        <td class="text-center">
+                            <a href="{% url 'delete-user' user.id %}" class="text-danger pr-1"> Delete </a>
+                            <a href="{% url 'update-user' user.id %}" class="text-secondary pl-1"> Update </a>
+                        </td>
+                    {% else %}
+                        <td> No action available</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr class="text-center">
+                <td colspan="4"> No Such Records found</td>
+            </tr>
+        {% endif %}
+    </table>
+
+{% endblock content %}
